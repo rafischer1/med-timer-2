@@ -1,10 +1,11 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function App() {
+  console.log("%c App Loading - Test", "color: pink;");
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <Text style={styles.text}>Generic Text</Text>
     </View>
   );
 }
@@ -12,8 +13,13 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#2d2d2d",
+    color: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  text: {
+    color: "#fff",
+    fontSize: 24,
   },
 });
