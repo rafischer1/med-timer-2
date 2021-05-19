@@ -1,16 +1,15 @@
 import React from "react";
-import HomeScreen  from "./screens/HomeScreen"
-import {
-  StyleSheet,
-  View,
-} from "react-native";
+import HomeScreen from "./screens/HomeScreen";
+import { StyleSheet, View } from "react-native";
+import Tabs from "./navigation/MainTabNavigator";
+import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
   console.log("%c App Loading - Test", "color: pink;");
   return (
-      <View style={styles.container}>
-       <HomeScreen />
-      </View>
+    <NavigationContainer>
+      <Tabs />
+    </NavigationContainer>
   );
 }
 
@@ -24,6 +23,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#fff",
-    fontSize: 24,
+    fontSize: 30,
   },
 });
