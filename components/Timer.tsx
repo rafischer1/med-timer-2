@@ -1,115 +1,74 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
+  Button,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
-  Button,
-  View,
-  SafeAreaView,
-  TextInput,
   Text,
+  View,
+  ViewStyle,
 } from "react-native";
 import CountDown from "react-native-countdown-component";
 import { Audio } from "expo-av";
 import { Input } from "react-native-elements";
 import { MontserratText } from "./MontserratText";
 import Slider from "@react-native-community/slider";
+import { timer } from "rxjs/dist/types";
 
-export default class Timer extends React.Component<
-  {},
-  {
-    hourValue: number;
-    minuteValue: number;
-    timerValue: string;
-    running: boolean;
-    duration: number;
-    finished: boolean;
-    notes: string;
-  }
-> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hourValue: 0,
-      minuteValue: 0,
-      timerValue: "",
-      running: false,
-      duration: 2,
-      finished: false,
-      notes: "",
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+const Timer = () => {
+  let [time, setTime] = useState(0);
+  let [mins, setMins] = useState(0);
+  let [hours, setHours] = useState(0);
+  let [running, setRunning] = useState(false);
 
-  handleSubmit(event) {
-    event.preventDefault();
-  }
+  let finished: boolean = false;
+  let notes: string = "";
+  let timerTime: number = 0;
 
-  _playSound = async () => {
-    let soundObject = new Audio.Sound();
-    try {
-      await soundObject.loadAsync(require("../assets/bell.mp3"));
-      await soundObject.playAsync();
-    } catch (err) {
-      console.log("sound error:", err);
-    }
+  const updateHourValue = (hours: number) => setHours(() => hours * 60);
+
+  const updateMinuteValue = (mins: number) => setMins(() => mins);
+
+  const startButton = () => {
+    setTime(() => hours * 60 + mins * 60);
+    setRunning(() => true);
+    playSound().then();
   };
 
-  _startButton(value) {
-    return this.setState({
-      timerValue: value.toString(),
-      hourValue: 0,
-      minuteValue: 0,
-      running: true,
-      finished: false,
-    });
-  }
+  const postSession = (sessionTime: number, notes: string) => {};
 
-  _stopButton = () => this.setState({ running: false });
-
-  _finishedCall(msg) {
-    this._playSound().then();
-    return this.setState({ finished: true });
-  }
-
-  _postSession = async (id, duration, notes) => {
-    let postBody = {
-      duration,
-      notes,
-    };
-    console.log("Session Posted:", postBody);
+  const cancelSession = () => {
+    console.log("cancel called");
+    setRunning(() => false);
   };
 
-  _cancelSession = () => {
-    return this.setState({
-      finished: false,
-      running: false,
-      timerValue: "",
-    });
+  const finishedCall = (type: "finished") => {
+    console.log("finished called");
+    setTime(() => 0);
+    setRunning(() => false);
   };
 
-  _onInputChange(val: string) {
-    return this.setState({
-      timerValue: val.replace(/[- #*;,.<>\{\}\[\]\\\/]/gi, ""),
-    });
-  }
+  useEffect(() => {});
 
-  render() {
-    return (
-      <SafeAreaView>
-        <MontserratText>Select time in minutes and begin</MontserratText>
+  return (
+    <SafeAreaView>
+      <MontserratText style={[styles.labels, { marginBottom: 10 }]}>
+        Select time and begin
+      </MontserratText>
+      {time && time > 0 ? (
         <CountDown
           size={30}
-          until={this.state.hourValue * 60 + this.state.minuteValue}
-          onFinish={() => this._finishedCall("finished")}
+          until={time}
+          // onFinish={() => finishedCall("finished")}
           digitStyle={{
             backgroundColor: "#FFF",
             borderWidth: 2,
             borderColor: "white",
             borderRadius: 5,
           }}
-          digitTxtStyle={{ color: "#2546A4" }}
+          digitTxtStyle={{ color: "#333" }}
           timeLabelStyle={{
-            color: "white",
+            color: "#333",
             fontWeight: "bold",
           }}
           timeToShow={["H", "M", "S"]}
@@ -119,106 +78,131 @@ export default class Timer extends React.Component<
             s: "sec",
           }}
           showSeparator
-          running={this.state.running}
+          running={running}
         />
-        {!this.state.running ? (
-          <View>
-            <Slider
-              step={1}
-              maximumValue={12}
-              minimumValue={0}
-              onSlidingComplete={(hourValue) => this.setState({ hourValue })}
-            />
-            <Text>{this.state.hourValue} Hours</Text>
-            <Slider
-              step={1}
-              maximumValue={59}
-              minimumValue={1}
-              onSlidingComplete={(minuteValue) =>
-                this.setState({ minuteValue })
-              }
-            />
-            <Text>{this.state.minuteValue} Minutes</Text>
-          </View>
-        ) : (
-          <Text />
-        )}
+      ) : (
+        <Text />
+      )}
 
-        {!this.state.finished ? (
-          <View>
-            <View>
-              <Button
-                onPress={() =>
-                  this._startButton(
-                    this.state.hourValue * 60 + this.state.minuteValue
-                  )
-                }
-                title="Start"
-                accessibilityLabel="Start the meditation timer"
-              />
-            </View>
-            <View>
-              <Button
-                onPress={() => this._stopButton()}
-                title="Stop"
-                accessibilityLabel="Stop the meditation timer"
-              />
-            </View>
-          </View>
-        ) : (
-          <ScrollView>
-            <Input
-              placeholder="Session Notes"
-              containerStyle={{
-                backgroundColor: "white",
-                padding: 10,
-                borderRadius: 5,
+      <View>
+        <MontserratText style={styles.labels}>
+          {hours > 0 ? hours / 60 : ""} Hours
+        </MontserratText>
+        <Slider
+          style={{ marginVertical: 10, height: 20 }}
+          step={1}
+          disabled={running}
+          maximumValue={12}
+          minimumValue={0}
+          onValueChange={(val) => {
+            updateHourValue(val);
+          }}
+        />
+
+        <MontserratText style={styles.labels}>
+          {mins > 0 ? mins : ""} Minutes
+        </MontserratText>
+        <Slider
+          style={{ marginVertical: 10, height: 20 }}
+          step={1}
+          maximumValue={59}
+          minimumValue={1}
+          disabled={running}
+          onValueChange={(val) => updateMinuteValue(val)}
+        />
+      </View>
+      {!finished ? (
+        <View>
+          <View style={buttonStyle}>
+            <Button
+              onPress={() => {
+                setHours(() => 0);
+                setMins(() => 0);
+                setTime(() => 0);
               }}
-              onChangeText={(text) =>
-                this.setState({ notes: this.state.notes })
-              }
-              value={this.state.notes}
-              spellCheck={true}
+              title="Clear"
+              color={"black"}
+              accessibilityLabel="Clear the timer"
             />
-            <View>
-              <Button
-                onPress={() => {
-                  return this._postSession(
-                    "default",
-                    this.state.timerValue,
-                    this.state.notes
-                  );
-                }}
-                title="Log Session"
-                accessibilityLabel="Log the session to your profile"
-              />
-            </View>
-            <View>
-              <Button
-                onPress={() => this._cancelSession()}
-                title="Cancel Session"
-                accessibilityLabel="Log the session to your profile"
-              />
-            </View>
-          </ScrollView>
-        )}
-      </SafeAreaView>
-    );
+          </View>
+          <View style={buttonStyle}>
+            <Button
+              onPress={() => startButton()}
+              title="Start"
+              color={"black"}
+              accessibilityLabel="Start the meditation timer"
+            />
+          </View>
+          <View style={buttonStyle}>
+            <Button
+              onPress={() => setRunning(() => false)}
+              title="Pause"
+              color={"black"}
+              accessibilityLabel="Stop the meditation timer"
+            />
+          </View>
+        </View>
+      ) : (
+        <ScrollView>
+          <Input
+            placeholder="Session Notes"
+            containerStyle={{
+              backgroundColor: "white",
+              padding: 10,
+              borderRadius: 5,
+            }}
+            onChangeText={(text) => (notes = text)}
+            value={notes}
+            spellCheck={true}
+          />
+          <View>
+            <Button
+              onPress={() => {
+                return postSession(time, notes);
+              }}
+              title="Log Session"
+              accessibilityLabel="Log the session to your profile"
+            />
+          </View>
+          <View>
+            <Button
+              onPress={() => cancelSession()}
+              title="Cancel Session"
+              accessibilityLabel="Log the session to your profile"
+            />
+          </View>
+        </ScrollView>
+      )}
+    </SafeAreaView>
+  );
+};
+
+const playSound = async () => {
+  let soundObject = new Audio.Sound();
+  try {
+    await soundObject.loadAsync(require("../assets/bell.mp3"));
+    await soundObject.playAsync();
+  } catch (err) {
+    console.log("sound error:", err);
   }
-}
+};
 
 // -=-Stylesheet Definition-=-
 const styles = StyleSheet.create({
-  numberInput: {
-    backgroundColor: "#333",
-    color: "white",
+  labels: {
+    fontSize: 20,
+    textDecorationLine: "underline",
+    textDecorationColor: "#78EFE4",
     textAlign: "center",
-    fontSize: 24,
   },
-  container: { color: "black" },
-  cancelButton: { color: "black" },
-  button: { color: "black" },
-  input: { color: "black" },
-  buttonStop: { color: "black" },
-  buttonStart: { color: "black" },
 });
+
+const buttonStyle: ViewStyle = {
+  width: "50%",
+  borderRadius: 10,
+  backgroundColor: "#78BFEF",
+  marginLeft: "25%",
+  marginTop: 5,
+};
+
+export default Timer;
