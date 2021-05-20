@@ -6,3 +6,7 @@
 - test: `npm test` - jest unit testing
 - linter: prettier with airbnb setting (doubleQuote: true preferred)
 ```
+
+-------------------------
+
+![image](./assets/screenshot1.png)
