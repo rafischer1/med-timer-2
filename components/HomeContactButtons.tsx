@@ -1,34 +1,49 @@
 import { Button, Linking, SafeAreaView, StyleSheet, View } from "react-native";
 import React from "react";
 
+type NavItem = {
+  title: string;
+  url: string;
+  styleSector: {
+    width: number;
+    backgroundColor: string;
+    color: string;
+    borderRadius: number;
+    marginBottom: number;
+  };
+};
+
 const HomeContactButtons = () => {
+  const navItems: NavItem[] = [
+    {
+      title: "Github Repo",
+      url: "https://github.com/rafischer1/med-timer-2",
+      styleSector: styles.buttonContainerThree,
+    },
+    {
+      title: "LinkedIn",
+      url: "https://www.linkedin.com/in/robert-a-fischer/",
+      styleSector: styles.buttonContainerOne,
+    },
+    {
+      title: "Instagram",
+      url: "https://www.instagram.com/peacemang/",
+      styleSector: styles.buttonContainerTwo,
+    },
+  ];
   return (
     <SafeAreaView>
-      <View style={styles.buttonContainerThree}>
-        <Button
-          color={"black"}
-          title={"Github Repo"}
-          onPress={() =>
-            navTo({ url: "https://github.com/rafischer1/med-timer-2" })
-          }
-        />
-      </View>
-      <View style={styles.buttonContainerOne}>
-        <Button
-          color={"black"}
-          title={"LinkedIn"}
-          onPress={() =>
-            navTo({ url: "https://www.linkedin.com/in/robert-a-fischer/" })
-          }
-        />
-      </View>
-      <View style={styles.buttonContainerTwo}>
-        <Button
-          color={"black"}
-          title={"Instagram"}
-          onPress={() => navTo({ url: "https://www.instagram.com/peacemang/" })}
-        />
-      </View>
+      {navItems.map((link) => {
+        return (
+          <View style={link.styleSector}>
+            <Button
+              color={"black"}
+              title={link.title}
+              onPress={() => navTo({ url: link.url })}
+            />
+          </View>
+        );
+      })}
     </SafeAreaView>
   );
 };
