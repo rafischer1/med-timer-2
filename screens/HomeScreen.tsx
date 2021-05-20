@@ -28,12 +28,10 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    color: "#333",
     margin: "auto",
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
-    fontFamily: "sans-serif",
     fontWeight: "bold",
     marginTop: 100,
     height: 200,
