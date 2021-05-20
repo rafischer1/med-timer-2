@@ -1,17 +1,31 @@
 import React from "react";
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, SafeAreaView } from "react-native";
+import { MontserratText } from "../components/MontserratText";
+import Timer from "../components/Timer";
 
 const TimerScreen = () => {
-  return <Text style={styles.container}>Timer Screen</Text>;
+  return (
+    <SafeAreaView>
+      <MontserratText style={styles.container}>Timer</MontserratText>
+      <Timer />
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    color: "black",
+    margin: "auto",
+    flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
-    fontSize: 18,
+    alignContent: "center",
+    justifyContent: "space-evenly",
+    fontWeight: "bold",
+    marginTop: 80,
+    height: 400,
+    fontSize: 25,
+    textDecorationLine: "underline",
+    textDecorationColor: "#78EFE4",
   },
 });
 

@@ -1,17 +1,28 @@
 import React from "react";
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, SafeAreaView, Vibration } from "react-native";
+import { MontserratText } from "../components/MontserratText";
 
 const ProfileScreen = () => {
-  return <Text style={styles.container}>Profile Screen</Text>;
+  return (
+    <SafeAreaView style={styles.container}>
+      <MontserratText style={styles.container}>Settings/Profile</MontserratText>
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    color: "black",
+    margin: "auto",
     alignItems: "center",
+    alignContent: "center",
     justifyContent: "center",
-    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 80,
+    height: 200,
+    fontSize: 25,
+    textDecorationLine: "underline",
+    textDecorationColor: "#78EFE4",
   },
 });
 
