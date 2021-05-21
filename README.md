@@ -41,6 +41,8 @@
 
 ---
 
-![image](./assets/screenshot1.png)
+![image](assets/images/screenshot1.png)
 
-![image](./assets/timerView1.png)
+![image](assets/images/timerView1.png)
+
+![image](assets/images/themeScreenShot.png)
