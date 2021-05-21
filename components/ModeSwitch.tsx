@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { Switch, View, StyleSheet } from "react-native";
 import { MontserratText } from "./MontserratText";
+import { toggleSoundState } from "../stores/sound-toggle.store";
 
 const ModeSwitch = () => {
   const [isEnabled, setIsEnabled] = useState(true);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const toggleSwitch = () => {
+    setIsEnabled((previousState) => {
+      toggleSoundState(!previousState);
+      return !previousState;
+    });
+  };
 
   return (
     <View style={styles.container}>

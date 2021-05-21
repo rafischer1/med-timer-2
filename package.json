@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@datorama/akita": "^6.1.3",
     "@react-native-community/rxjs": "^6.5.4-custom",
     "@react-native-community/slider": "^3.0.3",
     "@react-navigation/bottom-tabs": "^5.11.11",
