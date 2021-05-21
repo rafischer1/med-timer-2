@@ -18,7 +18,7 @@ const ModeSwitch = () => {
         Sound {isEnabled ? "On" : "Off"}
       </MontserratText>
       <Switch
-        trackColor={{ false: "#78DCEF", true: "#78EFE4" }}
+        trackColor={{ false: "#78EFE4", true: "#78DCEF" }}
         thumbColor={isEnabled ? "#333" : "#333"}
         ios_backgroundColor="#78BFEF"
         onValueChange={toggleSwitch}

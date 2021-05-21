@@ -13,9 +13,9 @@ import { Audio } from "expo-av";
 import { Input } from "react-native-elements";
 import { MontserratText } from "./MontserratText";
 import Slider from "@react-native-community/slider";
-import { timer } from "rxjs/dist/types";
+import { map, shareReplay } from "rxjs/operators";
 
-const Timer = () => {
+const Timer = ({ soundState$ }) => {
   let [time, setTime] = useState(0);
   let [mins, setMins] = useState(0);
   let [hours, setHours] = useState(0);
@@ -23,7 +23,6 @@ const Timer = () => {
 
   let finished: boolean = false;
   let notes: string = "";
-  let timerTime: number = 0;
 
   const updateHourValue = (hours: number) => setHours(() => hours * 60);
 
@@ -32,7 +31,16 @@ const Timer = () => {
   const startButton = () => {
     setTime(() => hours * 60 + mins * 60);
     setRunning(() => true);
-    playSound().then();
+    playSound();
+  };
+
+  const playSound = () => {
+    soundState$
+      .subscribe((state) => {
+        console.log("state:", state);
+        if (state) bell().then();
+      }, shareReplay(1))
+      .unsubscribe();
   };
 
   const postSession = (sessionTime: number, notes: string) => {};
@@ -40,7 +48,7 @@ const Timer = () => {
   const cancelSession = () => setRunning(() => false);
 
   const finishedCall = (type: "finished") => {
-    playSound().then();
+    playSound();
     setTime(() => 0);
     setRunning(() => false);
   };
@@ -178,7 +186,7 @@ const Timer = () => {
   );
 };
 
-const playSound = async () => {
+const bell = async () => {
   let soundObject = new Audio.Sound();
   try {
     await soundObject.loadAsync(require("../assets/bell.mp3"));

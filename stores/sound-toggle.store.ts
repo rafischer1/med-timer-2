@@ -1,4 +1,5 @@
 import { createEntityQuery, createEntityStore } from "@datorama/akita";
+import { Observable } from "rxjs/dist/types";
 
 export interface SoundToggleState {
   active: boolean;
@@ -20,4 +21,6 @@ export const toggleSoundState = (newState: boolean) =>
 export const soundToggleQuery =
   createEntityQuery<SoundToggleState>(soundToggleStore);
 
-export const soundActive$ = soundToggleQuery.select((state) => state.active);
+export const soundActive$: Observable<boolean> = soundToggleQuery.select(
+  (state) => state.active
+);

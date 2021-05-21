@@ -2,12 +2,15 @@ import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import { MontserratText } from "../components/MontserratText";
 import Timer from "../components/Timer";
+import { soundActive$ } from "../stores/sound-toggle.store";
+
+const soundState$ = soundActive$;
 
 const TimerScreen = () => {
   return (
     <SafeAreaView>
       <MontserratText style={styles.container}>Timer</MontserratText>
-      <Timer />
+      <Timer soundState$={soundState$} />
     </SafeAreaView>
   );
 };
