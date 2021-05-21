@@ -13,15 +13,15 @@ import { Audio } from "expo-av";
 import { Input } from "react-native-elements";
 import { MontserratText } from "./MontserratText";
 import Slider from "@react-native-community/slider";
-import { map, shareReplay } from "rxjs/operators";
+import { shareReplay } from "rxjs/operators";
 
 const Timer = ({ soundState$ }) => {
   let [time, setTime] = useState(0);
   let [mins, setMins] = useState(0);
   let [hours, setHours] = useState(0);
   let [running, setRunning] = useState(false);
+  let [finished, setFinished] = useState(false);
 
-  let finished: boolean = false;
   let notes: string = "";
 
   const updateHourValue = (hours: number) => setHours(() => hours * 60);
@@ -37,20 +37,22 @@ const Timer = ({ soundState$ }) => {
   const playSound = () => {
     soundState$
       .subscribe((state) => {
-        console.log("state:", state);
         if (state) bell().then();
       }, shareReplay(1))
       .unsubscribe();
   };
 
-  const postSession = (sessionTime: number, notes: string) => {};
+  const postSession = (sessionTime: number, notes: string) => {
+    setFinished(() => false);
+  };
 
-  const cancelSession = () => setRunning(() => false);
+  const cancelSession = () => setFinished(() => false);
 
   const finishedCall = (type: "finished") => {
     playSound();
     setTime(() => 0);
     setRunning(() => false);
+    setFinished(() => true);
   };
 
   useEffect(() => {});
