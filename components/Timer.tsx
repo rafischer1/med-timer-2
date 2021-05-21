@@ -83,7 +83,11 @@ const Timer = () => {
 
       <View>
         <MontserratText style={styles.labels}>
-          {hours > 0 ? hours / 60 : ""} Hours
+          {hours > 0
+            ? hours > 60
+              ? `${hours / 60} Hours`
+              : `1 Hour`
+            : "Hours"}
         </MontserratText>
         <Slider
           style={{ marginVertical: 10, height: 20 }}
@@ -96,7 +100,7 @@ const Timer = () => {
           }}
         />
         <MontserratText style={styles.labels}>
-          {mins > 0 ? mins : ""} Minutes
+          {mins > 0 ? (mins > 1 ? `${mins} Minutes` : `1 Minute`) : "Minutes"}
         </MontserratText>
         <Slider
           style={{ marginVertical: 10, height: 20 }}
@@ -115,6 +119,7 @@ const Timer = () => {
                 setHours(() => 0);
                 setMins(() => 0);
                 setTime(() => 0);
+                setRunning(() => false);
               }}
               title="Clear"
               color={"black"}

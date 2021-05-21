@@ -1,11 +1,15 @@
 import React from "react";
 import { Text, StyleSheet, SafeAreaView, Vibration } from "react-native";
 import { MontserratText } from "../components/MontserratText";
+import ModeSwitch from "../components/ModeSwitch";
 
 const ProfileScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <MontserratText style={styles.container}>Settings/Profile</MontserratText>
+      <SafeAreaView style={{ marginTop: 20 }}>
+        <ModeSwitch />
+      </SafeAreaView>
     </SafeAreaView>
   );
 };
