@@ -9,7 +9,9 @@ const ProfileScreen = () => {
       <MontserratText style={[styles.container, { marginTop: 0 }]}>
         Settings/Profile
       </MontserratText>
-      <ModeSwitch />
+      <ModeSwitch type={"Sound"} offText={"Off"} onText={"On"} />
+      <ModeSwitch type={"Theme"} offText={"Dark"} onText={"Light"} />
+      <ModeSwitch type={"Timer Style"} offText={"Basic"} onText={"Default"} />
     </SafeAreaView>
   );
 };
