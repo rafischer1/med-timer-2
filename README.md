@@ -10,3 +10,5 @@
 -------------------------
 
 ![image](./assets/screenshot1.png)
+
+![image](./assets/timerView1.png)
