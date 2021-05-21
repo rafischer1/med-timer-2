@@ -37,13 +37,10 @@ const Timer = () => {
 
   const postSession = (sessionTime: number, notes: string) => {};
 
-  const cancelSession = () => {
-    console.log("cancel called");
-    setRunning(() => false);
-  };
+  const cancelSession = () => setRunning(() => false);
 
   const finishedCall = (type: "finished") => {
-    console.log("finished called");
+    playSound().then();
     setTime(() => 0);
     setRunning(() => false);
   };
@@ -59,7 +56,7 @@ const Timer = () => {
         <CountDown
           size={30}
           until={time}
-          // onFinish={() => finishedCall("finished")}
+          onFinish={() => finishedCall("finished")}
           digitStyle={{
             backgroundColor: "#FFF",
             borderWidth: 2,
@@ -98,7 +95,6 @@ const Timer = () => {
             updateHourValue(val);
           }}
         />
-
         <MontserratText style={styles.labels}>
           {mins > 0 ? mins : ""} Minutes
         </MontserratText>
