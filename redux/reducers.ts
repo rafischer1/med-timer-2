@@ -1,4 +1,9 @@
-import { GET_SESSION_LOG, SessionLog } from "./actions";
+import {
+  ADD_SESSION,
+  DELETE_SESSION,
+  GET_SESSION_LOG,
+  SessionLog,
+} from "./actions";
 
 export type SessionLogsState = {
   sessionLogs: SessionLog[];
@@ -15,6 +20,14 @@ function sessionLogsReducer(
   switch (action.type) {
     case GET_SESSION_LOG:
       return { ...state, sessionLogs: action.payload };
+    case ADD_SESSION:
+      return { ...state, favorites: [...state.sessionLogs, action.payload] };
+    case DELETE_SESSION:
+      const index = state.sessionLogs.indexOf(action.payload[0]);
+      return {
+        ...state,
+        sessionLogs: state.sessionLogs.splice(index, 1),
+      };
     default:
       return state;
   }

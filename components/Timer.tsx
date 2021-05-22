@@ -14,6 +14,8 @@ import { Input } from "react-native-elements";
 import { MontserratText } from "./MontserratText";
 import Slider from "@react-native-community/slider";
 import { shareReplay } from "rxjs/operators";
+import { addSession, SessionLog } from "../redux/actions";
+import { useDispatch } from "react-redux";
 
 const Timer = ({ soundState$ }) => {
   let [time, setTime] = useState(0);
@@ -44,6 +46,12 @@ const Timer = ({ soundState$ }) => {
 
   const postSession = (sessionTime: number, notes: string) => {
     setFinished(() => false);
+    const log: SessionLog = {
+      notes,
+      duration: sessionTime,
+      date: "SOME WEIRD DATE",
+    };
+    addSessionLog(log);
   };
 
   const cancelSession = () => setFinished(() => false);
@@ -54,6 +62,10 @@ const Timer = ({ soundState$ }) => {
     setRunning(() => false);
     setFinished(() => true);
   };
+
+  // * ADD SESSION LOG METHODS
+  const dispatch = useDispatch();
+  const addSessionLog = (log: SessionLog) => dispatch(addSession(log));
 
   useEffect(() => {});
 

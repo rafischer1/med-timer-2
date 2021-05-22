@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { getSessionLogs, SessionLog } from "../redux/actions";
-import { Button, FlatList, TouchableOpacity, View } from "react-native";
+import { Button, FlatList, View } from "react-native";
 import { MontserratText } from "./MontserratText";
 import { SessionLogsState } from "../redux/reducers";
 
@@ -21,64 +21,74 @@ export default function SessionLogs() {
   const removeLog = (log: SessionLog) => {
     const index = logs.indexOf(log);
     if (index !== -1) {
-      console.log("DELETE LOG:", log);
+      dispatch(removeLog(log));
     }
   };
 
   return (
     <View style={{ flex: 1, marginTop: 44, paddingHorizontal: 20 }}>
-      <MontserratText style={{ fontSize: 22 }}>Session Logs</MontserratText>
+      <MontserratText style={{ fontSize: 22, textDecorationLine: "none" }}>
+        Session Logs
+      </MontserratText>
       <View style={{ flex: 1, marginTop: 12 }}>
         <FlatList
           data={logs}
           keyExtractor={(item) => logs.indexOf(item).toString()}
           renderItem={({ item }) => {
             return (
-              <View style={{ marginVertical: 12 }}>
-                <View style={{ flexDirection: "row", flex: 1 }}>
-                  <View style={{ flex: 1, marginLeft: 12 }}>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        marginTop: 10,
-                        alignItems: "center",
-                      }}
-                    >
-                      <MontserratText
-                        style={{
-                          fontSize: 18,
-                          paddingLeft: 10,
-                          color: "#64676D",
-                        }}
-                      >
-                        Date: {item.date}
-                      </MontserratText>
-                      <MontserratText
-                        style={{
-                          fontSize: 18,
-                          paddingLeft: 10,
-                          color: "#64676D",
-                        }}
-                      >
-                        Duration: {item.duration}
-                      </MontserratText>
-                      <MontserratText
-                        style={{
-                          fontSize: 18,
-                          paddingLeft: 10,
-                          color: "#64676D",
-                        }}
-                      >
-                        Notes: {item.notes}
-                      </MontserratText>
-                      <Button title={"X"} onPress={() => removeLog(item)} />
-                    </View>
-                  </View>
+              <View
+                style={{
+                  flex: 1,
+                  marginLeft: 12,
+                  borderRadius: 5,
+                  borderTopColor: "green",
+                  borderBottomColor: "green",
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginTop: 10,
+                    alignItems: "center",
+                  }}
+                >
+                  <MontserratText
+                    style={{
+                      fontSize: 20,
+                      paddingLeft: 10,
+                      color: "#64676D",
+                      textDecorationLine: "none",
+                    }}
+                  >
+                    Date: {item.date}
+                  </MontserratText>
+                  <MontserratText
+                    style={{
+                      fontSize: 18,
+                      paddingLeft: 10,
+                      color: "#64676D",
+                      textDecorationLine: "none",
+                    }}
+                  >
+                    Duration: {item.duration} Minutes
+                  </MontserratText>
+                  <MontserratText
+                    style={{
+                      fontSize: 18,
+                      paddingLeft: 10,
+                      color: "#64676D",
+                      textDecorationLine: "none",
+                    }}
+                  >
+                    Notes: [{item.notes}]
+                  </MontserratText>
+                  <Button title={"🗑"} onPress={() => removeLog(item)} />
                 </View>
               </View>
             );
           }}
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={true}
+          centerContent={true}
         />
       </View>
     </View>
