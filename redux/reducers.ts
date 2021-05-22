@@ -21,13 +21,21 @@ function sessionLogsReducer(
     case GET_SESSION_LOG:
       return { ...state, sessionLogs: action.payload };
     case ADD_SESSION:
-      return { ...state, favorites: [action.payload, ...state.sessionLogs] };
+      return { ...state, favorites: [...action.payload, ...state.sessionLogs] };
     case DELETE_SESSION:
       const index = state.sessionLogs.indexOf(action.payload[0]);
-      return {
-        ...state,
-        sessionLogs: state.sessionLogs.splice(index, 1),
-      };
+      if (index !== -1) {
+        const newLogs: SessionLog[] = state.sessionLogs.splice(index, 1);
+        return {
+          ...state,
+          sessionLogs: newLogs,
+        };
+      } else {
+        return console.log(
+          "%c ERROR: LOG NOT FOUND FOR DELETION",
+          "color: red;"
+        );
+      }
     default:
       return state;
   }
