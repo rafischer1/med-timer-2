@@ -6,12 +6,15 @@ export type SessionLog = {
 
 export const GET_SESSION_LOG = "GET_SESSION_LOG";
 
-export const getMovies = (): SessionLog[] => {
-  return [
-    {
-      date: Date.now().toLocaleString("en"),
-      duration: 20,
-      notes: "Test Notes",
-    },
-  ];
+export const getSessionLogs = () => {
+  return {
+    type: "GET_SESSION_LOG",
+    payload: [
+      {
+        date: Date.now().toLocaleString("en-US"),
+        duration: 20,
+        notes: "Test Notes",
+      },
+    ],
+  };
 };
