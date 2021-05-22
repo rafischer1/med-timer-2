@@ -11,7 +11,7 @@ export const getSessionLogs = () => {
     type: "GET_SESSION_LOG",
     payload: [
       {
-        date: Date.now().toLocaleString("en-US"),
+        date: "May 28, 2021",
         duration: 20,
         notes: "Test Notes",
       },

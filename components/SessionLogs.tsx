@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
-import { getSessionLogs } from "../redux/actions";
-import { FlatList, TouchableOpacity, View } from "react-native";
+import { getSessionLogs, SessionLog } from "../redux/actions";
+import { Button, FlatList, TouchableOpacity, View } from "react-native";
 import { MontserratText } from "./MontserratText";
 import { SessionLogsState } from "../redux/reducers";
 
@@ -18,8 +18,12 @@ export default function SessionLogs() {
     setLogs(() => sessionLogs);
   }, []);
 
-  console.log("session logs?:", sessionLogs);
-  console.log("useState logs:", logs);
+  const removeLog = (log: SessionLog) => {
+    const index = logs.indexOf(log);
+    if (index !== -1) {
+      console.log("DELETE LOG:", log);
+    }
+  };
 
   return (
     <View style={{ flex: 1, marginTop: 44, paddingHorizontal: 20 }}>
@@ -67,20 +71,7 @@ export default function SessionLogs() {
                       >
                         Notes: {item.notes}
                       </MontserratText>
-                      <TouchableOpacity
-                        onPress={() => console.log("Added!")}
-                        activeOpacity={0.7}
-                        style={{
-                          marginLeft: 14,
-                          flexDirection: "row",
-                          padding: 2,
-                          borderRadius: 20,
-                          alignItems: "center",
-                          justifyContent: "center",
-                          height: 40,
-                          width: 40,
-                        }}
-                      />
+                      <Button title={"X"} onPress={() => removeLog(item)} />
                     </View>
                   </View>
                 </View>

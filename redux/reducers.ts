@@ -5,13 +5,7 @@ export type SessionLogsState = {
 };
 
 const initialState: SessionLogsState = {
-  sessionLogs: [
-    {
-      date: `${new Date().getDay()}/${new Date().getMonth()}/${new Date().getFullYear()}`,
-      duration: 20,
-      notes: "Test Notes",
-    },
-  ],
+  sessionLogs: [],
 };
 
 function sessionLogsReducer(
@@ -20,7 +14,6 @@ function sessionLogsReducer(
 ) {
   switch (action.type) {
     case GET_SESSION_LOG:
-      console.log("in reducer:", action);
       return { ...state, sessionLogs: action.payload };
     default:
       return state;
