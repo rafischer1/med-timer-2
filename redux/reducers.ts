@@ -21,7 +21,7 @@ function sessionLogsReducer(
     case GET_SESSION_LOG:
       return { ...state, sessionLogs: action.payload };
     case ADD_SESSION:
-      return { ...state, favorites: [...state.sessionLogs, action.payload] };
+      return { ...state, favorites: [action.payload, ...state.sessionLogs] };
     case DELETE_SESSION:
       const index = state.sessionLogs.indexOf(action.payload[0]);
       return {

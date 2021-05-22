@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
-import { getSessionLogs, SessionLog } from "../redux/actions";
+import { getSessionLogs, removeSession, SessionLog } from "../redux/actions";
 import { Button, FlatList, View } from "react-native";
 import { MontserratText } from "./MontserratText";
 import { SessionLogsState } from "../redux/reducers";
@@ -18,18 +18,61 @@ export default function SessionLogs() {
     setLogs(() => sessionLogs);
   }, []);
 
-  const removeLog = (log: SessionLog) => {
-    const index = logs.indexOf(log);
-    if (index !== -1) {
-      dispatch(removeLog(log));
-    }
-  };
+  const removeLog = (log: SessionLog) => dispatch(removeSession(log));
 
   return (
-    <View style={{ flex: 1, marginTop: 44, paddingHorizontal: 20 }}>
-      <MontserratText style={{ fontSize: 22, textDecorationLine: "none" }}>
+    <View
+      style={{
+        flex: 1,
+        marginTop: 10,
+        marginBottom: 20,
+        borderBottomColor: "#78BFEF",
+        borderBottomWidth: 2,
+        minHeight: 300,
+      }}
+    >
+      <MontserratText
+        style={{
+          fontSize: 22,
+          textDecorationLine: "none",
+          textAlign: "center",
+        }}
+      >
         Session Logs
       </MontserratText>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          maxHeight: 10,
+        }}
+      >
+        <MontserratText
+          style={{
+            fontSize: 18,
+            textDecorationLine: "none",
+          }}
+        >
+          Date
+        </MontserratText>
+        <MontserratText
+          style={{
+            fontSize: 18,
+            textDecorationLine: "none",
+          }}
+        >
+          Duration
+        </MontserratText>
+        <MontserratText
+          style={{
+            fontSize: 18,
+            textDecorationLine: "none",
+          }}
+        >
+          Notes
+        </MontserratText>
+      </View>
       <View style={{ flex: 1, marginTop: 12 }}>
         <FlatList
           data={logs}
@@ -41,15 +84,15 @@ export default function SessionLogs() {
                   flex: 1,
                   marginLeft: 12,
                   borderRadius: 5,
-                  borderTopColor: "green",
-                  borderBottomColor: "green",
                 }}
               >
                 <View
                   style={{
                     flexDirection: "row",
-                    marginTop: 10,
+                    marginTop: 5,
+                    marginBottom: 5,
                     alignItems: "center",
+                    justifyContent: "space-between",
                   }}
                 >
                   <MontserratText
@@ -60,7 +103,7 @@ export default function SessionLogs() {
                       textDecorationLine: "none",
                     }}
                   >
-                    Date: {item.date}
+                    {item.date}
                   </MontserratText>
                   <MontserratText
                     style={{
@@ -70,7 +113,7 @@ export default function SessionLogs() {
                       textDecorationLine: "none",
                     }}
                   >
-                    Duration: {item.duration} Minutes
+                    {item.duration} Minutes
                   </MontserratText>
                   <MontserratText
                     style={{
@@ -80,7 +123,7 @@ export default function SessionLogs() {
                       textDecorationLine: "none",
                     }}
                   >
-                    Notes: [{item.notes}]
+                    {item.notes}
                   </MontserratText>
                   <Button title={"🗑"} onPress={() => removeLog(item)} />
                 </View>
