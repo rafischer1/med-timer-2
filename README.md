@@ -4,8 +4,8 @@
 - created with: `npx create-react-native-app -t with-typescript`
 - run: `npm start` - expo ios essentially
 - test: `npm test` - jest unit testing
-- linter: prettier with airbnb setting (doubleQuote: true preferred)
-- if `npm start` give you trouble run: `nvm use node && npm start`
+- linter: prettier with "airbnb" setting (doubleQuote: true preferred)
+- if `npm start` gives you trouble run: `nvm use node && npm start`
 ```
 
 ---
