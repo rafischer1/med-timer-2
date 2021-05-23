@@ -32,31 +32,6 @@ export const getSessionLogs = () => {
         duration: 15,
         notes: "Test Notes 2",
       },
-      {
-        date: "June 4, 2020",
-        duration: 5,
-        notes: "",
-      },
-      {
-        date: "January 10, 2021",
-        duration: 15,
-        notes: "Relaxing",
-      },
-      {
-        date: "September 20, 2020",
-        duration: 5,
-        notes: "",
-      },
-      {
-        date: "June 5, 2020",
-        duration: 15,
-        notes: "Test Notes 2",
-      },
-      {
-        date: "June 4, 2020",
-        duration: 5,
-        notes: "",
-      },
     ],
   };
 };
