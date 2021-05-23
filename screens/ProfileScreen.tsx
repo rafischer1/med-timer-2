@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, StyleSheet, SafeAreaView, Vibration, View } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import { MontserratText } from "../components/MontserratText";
 import ModeSwitch from "../components/ModeSwitch";
 import SessionLogs from "../components/SessionLogs";

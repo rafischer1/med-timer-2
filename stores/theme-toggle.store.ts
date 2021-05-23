@@ -13,9 +13,9 @@ export const themeToggleStore = createEntityStore<ThemeToggleState>(
   { name: "ThemeToggleStore", resettable: true }
 );
 
-export const toggleThemeState = (newState: boolean) =>
-  themeToggleStore.update((_) => {
-    return { light: newState };
+export const toggleThemeState = () =>
+  themeToggleStore.update((old) => {
+    return { light: !old };
   });
 
 export const themeToggleQuery =

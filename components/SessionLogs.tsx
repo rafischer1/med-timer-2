@@ -69,9 +69,7 @@ export default function SessionLogs() {
             maxHeight: 10,
           }}
         >
-          <MontserratText style={styles.font}>
-            (No Sessions)
-          </MontserratText>
+          <MontserratText style={styles.font}>(No Sessions)</MontserratText>
         </View>
       )}
 

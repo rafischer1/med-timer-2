@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Switch, View, StyleSheet } from "react-native";
 import { MontserratText } from "./MontserratText";
 import { toggleSoundState } from "../stores/sound-toggle.store";
+import {toggleThemeState} from "../stores/theme-toggle.store";
 
 const ModeSwitch = ({ type, onText, offText }) => {
   const [isEnabled, setIsEnabled] = useState(true);
@@ -12,10 +13,10 @@ const ModeSwitch = ({ type, onText, offText }) => {
           toggleSoundState(!previousState);
           break;
         case "Theme":
-          console.log("Theme CHANGE!");
+          toggleThemeState()
           break;
         case "Timer Style":
-          console.log("TIMER STYLE!");
+          console.log("timer style change")
       }
       return !previousState;
     });
