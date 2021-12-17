@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import Tabs from "./navigation/MainTabNavigator";
 import { NavigationContainer } from "@react-navigation/native";
